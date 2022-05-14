@@ -107,3 +107,24 @@ def test_collapsed_fieldsets() -> None:
 
     classes = options.get("classes", [])
     assert "collapse" in classes
+
+
+@pytest.mark.bonus
+def test_string_repr() -> None:
+    name = "foo"
+    assert str(models.Pokemon(name=name)) == name
+
+
+@pytest.mark.bonus
+@pytest.mark.parametrize("invalid_value", [15, 400])
+def test_hp_validation(invalid_value: int) -> None:
+    instance = models.Pokemon(
+        name="Squirtle",
+        type="WA",
+        hp=invalid_value,
+        name_fr="Squirtle",
+        name_jp="Squirtle",
+        name_ar="Squirtle",
+    )
+    with pytest.raises(ValidationError):
+        instance.full_clean(exclude=["name", "type", "name_fr", "name_jp", "name_ar"])
