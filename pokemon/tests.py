@@ -1,11 +1,11 @@
-from typing import Optional
+from typing import Any, Optional
 
 import pytest
 from django.core.exceptions import ValidationError
 from django.db.models import Model
 from django.db.models.fields import NOT_PROVIDED, Field
 
-from . import models
+from . import admin, models
 
 
 def get_field(name: str, model: Optional[type[Model]] = None) -> Field:
@@ -62,3 +62,48 @@ def test_created_at() -> None:
 def test_modified_at() -> None:
     field = get_field("modified_at")
     assert field.auto_now == True
+
+
+@pytest.mark.admin
+@pytest.mark.parametrize("field", ["id", "name", "hp", "active"])
+def test_list_display(field: str) -> None:
+    list_display = getattr(admin.PokemonAdmin, "list_display", [])
+    assert field in list_display
+
+
+@pytest.mark.admin
+def test_list_filter() -> None:
+    list_filter = getattr(admin.PokemonAdmin, "list_filter", [])
+    assert not isinstance(list_filter, str)
+    assert "active" in list_filter
+
+
+def get_options(spec: Optional[str]) -> Optional[dict[str, Any]]:
+    fieldsets = admin.PokemonAdmin.fieldsets
+    assert fieldsets is not None
+    for cur_spec, options in fieldsets:
+        if cur_spec == spec:
+            return options
+
+    return None
+
+
+@pytest.mark.admin
+def test_none_fieldsets() -> None:
+    options = get_options(None)
+    assert options is not None
+
+    fields = sorted(options.get("fields", []))
+    assert fields == ["active", "hp", "name", "type"]
+
+
+@pytest.mark.admin
+def test_collapsed_fieldsets() -> None:
+    options = get_options("Localizations")
+    assert options is not None, "No fieldset named Localizations found"
+
+    fields = sorted(options.get("fields", []))
+    assert fields == ["name_ar", "name_fr", "name_jp"]
+
+    classes = options.get("classes", [])
+    assert "collapse" in classes
