@@ -128,3 +128,10 @@ def test_hp_validation(invalid_value: int) -> None:
     )
     with pytest.raises(ValidationError):
         instance.full_clean(exclude=["name", "type", "name_fr", "name_jp", "name_ar"])
+
+
+@pytest.mark.models
+@pytest.mark.parametrize("field_name", ["name_fr", "name_jp", "name_ar"])
+def test_blank_fields(field_name: str) -> None:
+    field = get_field(field_name)
+    assert field.blank

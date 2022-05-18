@@ -47,4 +47,5 @@ For the models task below take advantage of the [model field reference](https://
 
 1. Add a string representation for the `Pokemon` model that is equal to the instance's `name`.
 2. Add validation for `hp` to be between `50` and `350`.
-3. Run `pytest` and pass all tests.
+3. Make your localizations optional on the admin panel (allow empty values default to your set default).
+4. Run `pytest` and pass all tests.
