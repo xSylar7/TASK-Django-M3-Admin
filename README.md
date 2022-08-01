@@ -1,6 +1,6 @@
 # Task
 
-For the models task below take advantage of the [model field reference](https://docs.djangoproject.com/en/4.0/ref/models/fields/), and for the admin task use the [admin site reference](https://docs.djangoproject.com/en/4.0/ref/contrib/admin/) to guide you.
+For the models task below, take advantage of the [model field reference](https://docs.djangoproject.com/en/4.0/ref/models/fields/), and for the admin task, use the [admin site reference](https://docs.djangoproject.com/en/4.0/ref/contrib/admin/) to guide you.
 
 ## Setup
 
@@ -38,14 +38,14 @@ For the models task below take advantage of the [model field reference](https://
 3. Customize your `PokemonAdmin`:
    - The list page only displays the `id`, `name`, `hp`, and `active`.
    - The list page is filterable by `active` status.
-   - The list page has both `id` and `name` columns clickable and take you to the form page.
-   - The form page has the `name_fr`, `name_ar`, and `name_jp` in different section below, with the title as `Localizations` and collapsible (hint: look for something called `fieldsets`).
+   - The list page has both `id` and `name` columns that are clickable, they take you to the form page when clicked.
+   - The form page has the `name_fr`, `name_ar`, and `name_jp` in different sections below, with the title as `Localizations` and collapsible (hint: look for something called `fieldsets`).
 4. Run `pytest -m admin` and pass all tests.
 5. Push your code.
 
 ## Bonus
 
 1. Add a string representation for the `Pokemon` model that is equal to the instance's `name`.
-2. Add validation for `hp` to be between `50` and `350`.
+2. Add a validation for `hp` to be between `50` and `350`.
 3. Make your localizations optional on the admin panel (allow empty values default to your set default).
 4. Run `pytest` and pass all tests.
