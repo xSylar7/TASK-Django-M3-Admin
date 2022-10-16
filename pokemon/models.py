@@ -18,7 +18,7 @@ class Pokemon (models.Model):
     type = models.CharField(max_length=2, choices=PokemonType.choices)
     hp = models.PositiveIntegerField(validators=[MinValueValidator(50, "cant be below 50"),
                                                  MaxValueValidator(350, "can't be a above 350")])
-    active = models.BooleanField(True)
+    active = models.BooleanField(default=True)
     name_fr = models.CharField(max_length=30, default="", blank=True)
     name_ar = models.CharField(max_length=30, default="", blank=True)
     name_jp = models.CharField(max_length=30, default="", blank=True)
